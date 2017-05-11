@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../lib/codemirror.css">
+    <script src="../lib/codemirror.js"></script>
+    <script src="../addon/hint/show-hint.js"></script>
+    <link rel="stylesheet" href="../addon/hint/show-hint.css">
+
+    <script src="../addon/hint/javascript-hint.js"></script>
+    <script src="../mode/javascript/javascript.js"></script>
+    <link rel="stylesheet" href="../doc/docs.css">
+    <script src="../js/jquery.min.js"></script>
+
+</head>
+<body>
+<textarea  id="body">
+
+</textarea>
+
+<script>
+    $(function(){
+        /*document.getElementById('body')*/
+//        console.log($('#body')[0],document.getElementById('body'));
+
+        var myCodeMirror = CodeMirror.fromTextArea(document.getElementById('body'),{
+            value :'function hello(){return "Hello World!";}',
+            mode: 'text/javascript',
+            lineNumbers: true
+        });
+    });
+
+</script>
+</body>
+</html>

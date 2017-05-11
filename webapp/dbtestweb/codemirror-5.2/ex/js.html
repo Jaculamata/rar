@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><title>Title</title>
+    <link rel="stylesheet" href="../lib/codemirror.css">
+    <script src="../lib/codemirror.js"></script>
+    <script src="../addon/hint/show-hint.js"></script>
+    <link rel="stylesheet" href="../addon/hint/show-hint.css">
+
+    <script src="../addon/hint/javascript-hint.js"></script>
+    <script src="../mode/javascript/javascript.js"></script>
+    <link rel="stylesheet" href="../doc/docs.css">
+    <script src="../js/jquery.min.js"></script>
+</head>
+<body>
+<form><textarea id="code" name="code"></textarea></form>
+
+<script>
+    $(function () {
+        var cm = CodeMirror.fromTextArea(document.getElementById("code"),{
+            mode : 'text/javascript'
+            , indentUnit: 2
+            , smartIndent: true
+            , tabSize: 4
+            , readOnly: false
+            , showCursorWhenSelecting: true
+            , lineNumbers: true //显示行号
+            , matchBrackets: true
+            , autoFocus: true
+            , textWrapping: true
+            , lineWrapping: true
+            , extraKeys: {"Ctrl":"autocomplete"}
+            ,
+        });
+
+    })
+</script>
+</body>
+</html>

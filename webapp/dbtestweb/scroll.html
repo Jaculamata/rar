@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <!--<meta name="keywords" content="滚动条, scrollbar, 页面底部, 聊天窗口, " />
+    <meta name="description" content="有些时候（如开发聊天程序），我们需要将将滚动条（scrollbar）保持在最底部，比如聊天窗口，最新发出和收到的信息要显示在最 下方，如果要看到最下方的内容，就必须保证滚动条保持在最底部。" />
+    -->
+    <title>将滚动条（scrollbar）保持在最底部的方法 - 滚动条, scrollbar, 页面底部, 聊天窗口, </title>
+    <!--导入easyui CSS 和 js-->
+    <link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="easyui/demo/demo.css">
+    <script type="text/javascript" src="easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
+    <style>
+        body {
+            background: #fff;
+        }
+        p.pred {
+            color: red;
+        }
+        p.pgreen {
+            color: green;
+        }
+    </style>
+    <!--<script src="../js/jquery.min.js"></script>-->
+</head>
+<body id="kztbody">
+<script type="text/javascript">
+    function add()
+    {
+        //var now = new Date();
+        var div = document.getElementById('scrolldIV');
+//                var info = getcontent();
+        console.log(info);
+        div.innerHTML = div.innerHTML +info+ '<br>';
+        div.scrollTop = div.scrollHeight;
+    }
+    var i=1;
+    var cur = 0;
+    function getcontent(){
+        $.ajax('res.php', {
+            type: "get",
+            success: function (resp) {
+                var jsonres = eval('(' + resp + ')');
+                if (jsonres['iszx'] == 1) {
+                    var resinfo = "执行开始";
+                    if (jsonres['msg'] == 0) {/*等待执行结果*/
+                        resinfo = "等待执行结果" + i;
+                        if (cur == 2) {
+
+                        }
+                    } else {/*执行结果*/
+                        var res = jsonres['res'][0];
+//                                var res = jsonres;
+                        console.log(res);
+                        resinfo = "指令：" + res['zl'] + " 期望：" + res['qw'] + "状态：执行通过；";
+                        resinfo += "等待执行结果" + i;
+                        if (cur == 1) {
+                            cur = 0;
+                        }
+                    }
+//                   console.log( eval('('+resp+')')[0]['zlid']);
+                    if (cur == 0) {
+                        cur = 1;
+                        var date = new Date();
+                        var p = document.createElement('p');
+
+                        var sec;
+                        if (date.getSeconds() < 10) {
+                            sec = "0" + date.getSeconds();
+                        } else {
+                            sec = date.getSeconds();
+                        }
+                        var tmp = date.getFullYear() + "年" + date.getMonth() + "月" + date.getDate() + "日 " + date.getHours() + ":" + date.getMinutes() + ":" + sec;
+                        /*p.innerText = tmp + ":" + resinfo;//+resp;
+                         $('#content').append(p);*/
+                        $('#info').html("执行开始：info" + i);
+                        i++;
+                        var info = tmp+":"+resinfo;
+                        var div = document.getElementById('kztbody');/*scrolldIV*/
+//                var info = getcontent();
+//                                console.log(info);
+                        div.innerHTML = div.innerHTML +info+ '<br>';
+                        div.scrollTop = div.scrollHeight;
+                    }
+                }
+            }
+        });
+    }
+
+    function removeAll(){
+        $('#kztbody').remove();
+    }
+    $(function(){
+
+        $(document).bind("contextmenu",function(e) {
+            e.preventDefault();
+            $('#rmenu').menu('show', {
+                //显示右键菜单
+                left: e.pageX,//在鼠标点击处显示菜单
+                top: e.pageY
+            });
+            /*alert("sorry! No right-clicking!");
+             return false;*/
+        });
+
+        /*setInterval(function(){
+            getcontent();
+        },1000);*/
+    })
+</script>
+</body>
+</html>

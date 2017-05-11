@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>顶部菜单</title>
+  <link rel="stylesheet" type="text/css" href="../themes/default/easyui.css">
+  <link rel="stylesheet" type="text/css" href="../themes/icon.css"/>
+  <script src="../jquery.min.js"></script>
+  <script src="../jquery.easyui.min.js"></script>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    a:hover {
+      /*background-color: #00a0e9;*/
+    }
+  </style>
+</head>
+<body>
+<table>
+  <tr>
+    <td id="file" onclick="showFile()"><span style="text-decoration:underline">F</span>ile</td>
+    <td onclick="showEdit()"><span style="text-decoration:underline">E</span>dit</td>
+    <td><a>Edit</a></td>
+    <td><a>View</a></td>
+  </tr>
+</table>
+
+<script src="./js/aevent.js"></script>
+</body>
+</html>

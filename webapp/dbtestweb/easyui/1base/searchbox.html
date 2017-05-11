@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="../themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../themes/icon.css" />
+    <script src="../jquery.min.js"></script>
+    <script src="../jquery.easyui.min.js"></script>
+</head>
+<body>
+<!--<script type="text/javascript">
+    function qq(value,name){/*value 是输入到搜索框的值，name是menu里面的选项的name*/
+        alert(value+":"+name)
+    }
+</script>
+<input id="ss" class="easyui-searchbox" style="width:300px"
+       data-options="searcher:qq,prompt:'Please Input Value',menu:'#mm'" />
+<div id="mm" style="width:120px">
+    <div data-options="name:'all',iconCls:'icon-ok'">All News</div>
+    <div data-options="name:'sports'">Sports News</div>
+</div>-->
+<!--1.通过标签创建搜索框-->
+<!--<input id="ss" class="easyui-searchbox" style="width: 300px"
+data-options="searcher:qq, prompt:'please input value',menu:'#mm'" />
+<div id="mm" style="width: 120px">
+    <div data-options="name: 'all', iconCls:'icon-ok'">All news</div>
+    <div data-options="name:'sports'">Sports News</div>
+</div>
+
+<script>
+    function qq(value,name){
+        alert(value+":"+name);
+    }
+</script>-->
+<!--2.通过js创建搜索框-->
+<input id="searchbox" />
+<div id="menu2">
+    <div data-options="name: 'all', iconCls:'icon-ok'">All news</div>
+    <div data-options="name:'sports'">Sports News</div>
+</div>
+<script src="../js/searchbox.js"></script>
+</body>
+</html>

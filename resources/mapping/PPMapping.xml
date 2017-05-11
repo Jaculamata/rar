@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xq.dao.PPDao">
+
+    <!--首先获取该PP有没有value-->
+    <select id="selectPP" parameterType="com.xq.model.PP" resultType="com.xq.model.PP">
+        SELECT *
+        FROM table_project_property
+        WHERE projectid = #{projectid} AND propertyid=#{propertyid}
+    </select>
+
+    <!--更新-->
+    <update id="updatePP" parameterType="com.xq.model.PP">
+        update table_project_property set value=#{value}where projectid = #{projectid} AND propertyid=#{propertyid}
+    </update>
+
+    <!--插入jar包-->
+    <insert id="insertPP" parameterType="com.xq.model.PP">
+        insert into table_project_property (projectid,propertyid,value) VALUES (#{projectid},#{propertyid},#{value})
+    </insert>
+
+    <!--4.14新建项目时查找project表里面插入记录后的projectid-->
+
+    <!--<insert id="select_new_projectid" useGeneratedKeys="true" keyProperty="projectid" parameterType="com.xq.model.Project">
+        INSERT INTO table_project (name,user,time) VALUES (#{name},#{user},#{time})
+
+    </insert>-->
+
+    <insert id="select_new_projectid" parameterType="com.xq.model.Project">
+        INSERT INTO table_project (name,description,user,time) VALUES (#{name},#{description},#{user},#{time})
+        <selectKey resultType="int" order="AFTER" keyProperty="projectid">
+            SELECT LAST_INSERT_ID() AS projectid
+        </selectKey>
+    </insert>
+
+    <!--4.14新建项目时更新manager表里面的recentid-->
+    <update id="update_recentid" parameterType="com.xq.model.User">
+         UPDATE table_manager SET recent_projectid=#{recent_projectid} WHERE user=#{user}
+    </update>
+
+    <!--4.14.将所有信息插入PP表里面-->
+    <insert id="insert_PP" parameterType="java.util.ArrayList">
+        insert into table_project_property (projectid,propertyid,value) VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.projectid},#{item.propertyid},#{item.value})
+        </foreach>
+    </insert>
+<!-- insert into table_project_property (projectid,propertyid,value) VALUES (#{projectid},#{propertyid},#{value})-->
+
+
+    <!--先查询 projectid=0的Menu表中的所有信息-->
+    <select id="select_Menu" parameterType="int" resultType="com.xq.model.Menu">
+        SELECT * FROM table_menu WHERE projectid=#{projectid}
+    </select>
+
+    <!--4.1先将选择的安全等级父节点的信息插入menu表-->
+    <insert id="insertFJ_menu" parameterType="com.xq.model.Menu">
+        INSERT INTO table_menu (id,fj,projectid,level,text,state,type) VALUES (#{id},#{fj},#{projectid},#{level},#{text},#{state},#{type})
+    </insert>
+
+    <!--4.2Menu表中的所有信息复制插入-->
+    <insert id="insertMenu" parameterType="com.xq.model.Menu">
+        INSERT INTO table_menu (projectid,id,fj,level,text,state,type) select #{projectid} as projectid,id,fj,level,text,state,type from table_menu where projectid=0 and fj LIKE #{fj};
+    </insert>
+<!--  VALUES (#{id},#{fj},#{projectid},#{level},#{text},#{state},#{type});-->
+
+    <!--先查询 projectid=0的XML表中的所有信息-->
+    <select id="selectXml" parameterType="int" resultType="com.xq.model.Xml">
+        SELECT * FROM table_xml WHERE projectid=#{projectid}
+    </select>
+
+    <!-- 5.xml表中的所有信息复制插入-->
+    <insert id="insertXml" parameterType="com.xq.model.Xml">
+      insert into table_xml (projectid,type,title,description,content) select #{projectid} as projectid,type,title,description,content from table_xml where projectid=0 and title like #{title}
+
+    </insert>
+<!--      (#{projectid},#{type},#{title},#{description},#{content})-->
+</mapper>

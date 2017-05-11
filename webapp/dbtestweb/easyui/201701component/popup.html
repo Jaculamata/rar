@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>使用jquery弹出层和点击空白处隐藏层</title>
+  <script type="text/javascript" src="../jquery.min.js"></script>
+  <script type="text/javascript">
+    $(function () {
+
+    })
+  </script>
+</head>
+<body>
+<div>
+  <br/>
+  <!--<input type="button" id="btnShow" value="显示提示内容"/>-->
+  <a id="show">show</a>
+  <a id="edit"><span style="text-decoration:underline">E</span>dit</a>
+</div>
+<div id="showdiv"
+     style=" background-color:gray; border: solid 1px; position:absolute; display:none; width:400px; height:200px;">
+  <!--<div style="text-align:center;">点击本区域或空白隐藏弹出层 showdiv</div>-->
+  <p>新建工程</p>
+  <p>基础设置</p>
+</div>
+<div id="editdiv"
+     style=" background-color:#99CCFF; border: solid 2px #ff0000; position:absolute; display:none; width:400px; height:200px;">
+  <div style="text-align:center;">点击本区域或空白隐藏弹出层 editdiv</div>
+</div>
+<script src="./js/aevent.js"></script>
+</body>
+</html>

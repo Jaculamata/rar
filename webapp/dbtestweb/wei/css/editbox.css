@@ -1,0 +1,114 @@
+@CHARSET "UTF-8";
+
+.CodeMirror {
+    border: 1px solid black;
+}
+
+body{
+	font-size: 13px;
+}
+
+.operation{
+	position: fixed;
+	z-index:9999;
+	top:0;
+	left:0;
+	width: 100%;
+	font-size: 13px;
+	padding:10px 10px;
+	background: #ffffff;
+	vertical-align: middle;
+	border-bottom: 1px solid #D4D4D4 ;
+}
+
+.xmlid{
+	height:20px;
+	width:120px;
+	border-radius:5px;
+	border-color:#8DEEEE;
+}
+
+.btn{
+	border-radius:3px;
+	padding:3px 6px;
+}
+.btn:hover{
+	cursor:pointer;
+}
+.btn-primary{
+	background:#3487C0;
+	border:solid 1px #36A4D3;
+	color:white;
+}
+.btn-primary:hover{
+	color:white;
+	background:#005995;
+}
+
+.file {
+	position:relative;
+	border-radius:3px;
+	padding:3px 6px;
+	background:#3487C0;
+	border:solid 1px #36A4D3;
+	color: white;
+	overflow: hidden;
+	text-decoration:none;
+	display:inline-block;
+	vertical-align: bottom;
+	text-align: center;
+}
+#edit_import,#edit_export{
+	color: white;
+}
+.file input {
+	position: absolute;
+	right:0;
+	top:0;
+	opacity: 0;
+}
+.file:hover {
+	background: #005995;
+	color: white;
+	cursor:pointer;
+	text-decoration:none;
+}
+
+.table-style{
+	width:100%;
+	height: 100%;
+}
+.table-style .left{
+	width:50%;
+}
+.table-style .right{
+	padding-left: 25px;
+	width:50%;
+}
+
+.table-style textarea{
+	vertical-align: middle;
+	padding: 5px;
+	border: 1px solid #000;
+	width: 98%;
+	height: 390px;
+	resize: none;
+}
+/*.description {
+	padding: 5px;
+	border: 1px solid #000;
+	width: 100%;
+	height: 250px;
+}*/
+.distance {
+	margin-top:10px;
+}
+
+.content {
+	padding-left: 60px;
+	padding-top: 20px;
+}
+.dlg-select {
+	margin-top: 10px;
+	width: 110px;
+}

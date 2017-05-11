@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--核心文件-->
+    <script src="lib/codemirror.js"></script>
+    <link rel="stylesheet" href="lib/codemirror.css">
+    <!--提示功能-->
+    <link type="text/css" rel="stylesheet" href="./addon/hint/show-hint.css" />
+    <script type="text/javascript" src="./addon/hint/show-hint.js"></script>
+
+    <!--js自动提示-->
+    <script type="text/javascript" src="./addon/hint/javascript-hint.js"></script>
+    <script type="text/javascript" src="./mode/javascript/javascript.js"></script>
+
+    <!--xml自动提示-->
+    <script type="text/javascript" src="./addon/hint/xml-hint.js"></script>
+    <script type="text/javascript" src="./mode/xml/xml.js"></script>
+</head>
+<body>
+<form>
+    <textarea id="code">
+        function myScript(){return 100;}
+    </textarea>
+</form>
+<script>
+    var code = document.getElementById('code');
+    var myCodeMirror = CodeMirror.fromTextArea(code, {
+        mode:  "text/javascript" ,// text/xml text/javascript
+        extraKeys: {"Ctrl": "autocomplete"},
+        lineNumbers: true ,
+    });
+</script>
+</body>
+</html>

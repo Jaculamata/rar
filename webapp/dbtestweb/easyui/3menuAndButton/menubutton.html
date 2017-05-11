@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="../themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../themes/icon.css" />
+    <script src="../jquery.min.js"></script>
+    <script src="../jquery.easyui.min.js"></script>
+</head>
+<body>
+<a href="javascript:void(0)" id="mb" class="easyui-menubutton"
+   data-options="menu:'#mm',iconCls:'icon-edit'">Edit</a>
+<div id="mm" style="width:150px;">
+    <div data-options="iconCls:'icon-undo'">Undo</div>
+    <div data-options="iconCls:'icon-redo'">Redo</div>
+    <div class="menu-sep"></div>
+    <div data-options="iconCls:'icon-cut'" onclick="javascript:alert('cut');">Cut</div>
+    <div>Copy</div>
+    <div>Paste</div>
+    <div class="menu-sep"></div>
+    <div data-options="iconCls:'icon-remove'">Delete</div>
+    <div>Select All</div>
+</div>
+<a href="javascript:void(0)" id="mbhelp" class="easyui-menubutton"
+   data-options="menu:'#mmhelp',iconCls:'icon-help'">Help</a>
+<div id="mmhelp" style="width:150px;">
+    <div data-options="iconCls:'icon-undo'">Undo</div>
+    <div data-options="iconCls:'icon-redo'">Redo</div>
+    <div class="menu-sep"></div>
+    <div data-options="iconCls:'icon-cut'">Cut</div>
+    <div>Copy</div>
+    <div>Paste</div>
+    <div class="menu-sep"></div>
+    <div data-options="iconCls:'icon-remove'">Delete</div>
+    <div>Select All</div>
+</div>
+<script src="../js/menubutton.js"></script>
+</body>
+</html>

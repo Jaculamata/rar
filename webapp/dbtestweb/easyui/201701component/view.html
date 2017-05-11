@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" type="text/css" href="../themes/default/easyui.css">
+  <link rel="stylesheet" type="text/css" href="../themes/icon.css"/>
+  <script src="../jquery.min.js"></script>
+  <script src="../jquery.easyui.min.js"></script>
+  <link rel="stylesheet" href="../assets/css/bootstrap.min.css"/>
+  <script src="../../dev/bootstrap/v3.3.7/js/bootstrap.min.js"></script>
+  <style>
+    a.head {
+      color: #000;
+      text-decoration: none;
+    }
+
+    /*a:hover {
+        text-decoration:underline;
+    }*/
+    a:hover {
+      background-color: #00a0e9;
+    }
+  </style>
+</head>
+<body>
+<div id="cc" class="easyui-layout" style="width:600px;height:400px;" data-options="fit:true">
+  <div data-options="region:'north',title:'数据库安全等级测评系统',split:true" style="height:60px;">
+    <!--<a href="javascript:void(0)" id="mb" class="easyui-menubutton"
+       data-options="menu:'#mm'">新建</a>
+    <div id="mm" style="width:70px;">
+        <div onclick="newProject()">新建项目</div>
+        <div class="menu-sep"></div>
+        <div><a class="head" href="logout.php">退出</a></div>
+    </div>
+    <a href="javascript:void(0)" id="mbhelp" class="easyui-menubutton"
+       data-options="menu:'#mmhelp'">帮助</a>&lt;!&ndash; ,iconCls:'icon-help' &ndash;&gt;
+    <div id="mmhelp" style="width:70px;">
+        <div>帮助文档</div>
+        <div>联系我们</div>
+    </div>-->
+    <!--<a><span style="text-decoration:underline">F</span>ile</a>
+    <a>Edit</a>
+    <a>View</a>-->
+    <div id="logo">
+      数据库安全等级测评系统
+  <span class="text-right">
+      您好，admin
+  </span>
+    </div>
+  </div>
+  <div data-options="region:'south',title:'South Title',split:true" style="height:100px;">
+    <div class="navbar-header pull-left">
+      <!-- #section:basics/navbar.layout.brand -->
+      <a href="#" class="navbar-brand">
+        <small>
+          <i class="fa fa-leaf"></i>
+          数据库安全等级测评系统
+        </small>
+      </a>
+    </div>
+  </div>
+  <div data-options="region:'east',iconCls:'icon-reload',title:'East',split:true" style="width:100px;"></div>
+  <div data-options="region:'west',title:'West',split:true" style="width:170px;">
+    <div id="aa" class="easyui-accordion" style="width:150px;height:200px;"
+         data-options="fit:true">
+      <div title="title1" data-options="iconCls:'icon-save'" style="overflow: auto; padding: 10px;">
+        <h3 style="color: #0099FF">Accordion for Jquery</h3>
+        <p>Accordion is a pert of easyui framework for jquery</p>
+      </div>
+      <div title="title2" data-options="iconCls:'icon-reload', selected: true" style="overflow: auto; padding: 10px;">
+        <h3 style="color: #0099FF">Content2</h3>
+        <p>Accordion is a pert of easyui framework for jquery</p>
+      </div>
+      <div title="Title3">
+        Content3.
+      </div>
+    </div>
+  </div>
+  <div data-options="region:'center',title:'center title'" style="padding:5px;background:#eee;"></div>
+</div>
+<!--新建项目-->
+<div id="win" class="easyui-dialog" title="参数设置" style="width: 600px;height: 400px;padding: 10px"
+     buttons="#dlg-buttons" closed="true" data-options="inline:true">
+  <table id="pg2" style="width: 560px;"></table>
+  <!--<iframe src="../5datagridAndTree/propertygrid.html" width="99%" height="95%" scrolling="yes">此浏览器不支持iframe.</iframe>-->
+</div>
+<!--toolbar="#dlg-toolbar"-->
+<div id="dlg-buttons">
+  <table cellpadding="0" cellspacing="0" style="width: 100%">
+    <tr>
+      <td>
+        <a href="#" class="easyui-linkbutton" iconCls="icon-save" plain="true"
+           onclick="saveForm()">保存</a>
+        <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" plain="true"
+           onclick="javascript:$('#win').dialog('close');">取消</a>
+      </td>
+    </tr>
+  </table>
+</div>
+<script src="../js/view.js"></script>
+<script src="../js/propdialog.js"></script>
+</body>
+</html>

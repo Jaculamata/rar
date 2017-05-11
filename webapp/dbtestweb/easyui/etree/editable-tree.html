@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>jQuery EasyUI</title>
+	<link rel="stylesheet" type="text/css" href="../themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../themes/icon.css"/>
+
+	<link rel="stylesheet" type="text/css" href="../../css/alink.css">
+
+	<script src="../jquery.min.js"></script>
+	<script src="../jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="jquery.etree.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$('#tt').etree({
+				url: 'get_data.php', /*tree_data.json*/
+				createUrl:'create.php',
+				updateUrl:'update.php',
+				destroyUrl:'destroy.php',
+				dndUrl:'dnd.php',
+				dnd: false,
+				formatter: function (node) {
+					$.parser.parse();
+					return '<a onclick="addPanel(\'./test_1_login/index.html\',\'1.登录测试\')">'+node.text+'</a>';
+				},
+				onClick:function(node){
+//					alert(node.text);
+				},
+				onContextMenu: function (e, node) {
+					e.preventDefault();
+//					查找节点
+					$('#tt').etree('select',node.target);
+//					显示快捷菜单
+					$('#rmenu').menu('show',{
+						left: e.pageX,
+						top: e.pageY
+					});
+				},
+			});
+		});
+	</script>
+</head>
+<body>
+	<h1>安全标准框架管理模块</h1>
+	<!--<div style="margin-bottom:10px">
+		<a href="#" onclick="javascript:$('#tt').etree('create')">Create</a>
+		<a href="#" onclick="javascript:$('#tt').etree('edit')">Edit</a>
+		<a href="#" onclick="javascript:$('#tt').etree('destroy')">Destroy</a>
+	</div>-->
+	<ul id="tt"></ul>
+	<div id="rmenu" class="easyui-menu" style="width: 30px; display: none;">
+		<!--放置一个隐藏的菜单Div-->
+		<!--具体的菜单事件请自行添加，跟toolbar的方法是基本一样的-->
+		<div id="btn_Add" data-options="iconCls:'fa fa-plus'" onclick="javascript:$('#tt').etree('create')">新增</div>
+		<div id="btn_Modify" data-options="iconCls:'icon-edit'" onclick="javascript:$('#tt').etree('edit')">修改</div>
+		<div id="btn_Delete" data-options="iconCls:'icon-remove'" onclick="javascript:$('#tt').etree('destroy')">删除</div>
+	</div>
+	<!--<ul class="easyui-tree" data-options="url:'get_data.php'"></ul>-->
+</body>
+</html>

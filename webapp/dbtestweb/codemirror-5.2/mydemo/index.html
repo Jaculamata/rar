@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <!--ambiance主题风格-->
+    <link rel="stylesheet" href="../theme/ambiance.css">
+    <!--核心文件-->
+    <link type="text/css" rel="stylesheet" href="../lib/codemirror.css"/>
+    <script type="text/javascript" src="../lib/codemirror.js"></script>
+
+    <link type="text/css" rel="stylesheet" href="../addon/hint/show-hint.css"/>
+    <script type="text/javascript" src="../addon/hint/show-hint.js"></script>
+    <!--mysql高亮提示框-->
+    <script type="text/javascript" src="../addon/hint/sql-hint.js"></script>
+    <script type="text/javascript" src="../mode/sql/sql.js"></script>
+
+    <style>
+        .CodeMirror {
+            border: 1px solid black;
+        }
+
+        #btn {
+            margin: 5px;
+        }
+    </style>
+</head>
+
+<body>
+<!--<h2>SQL编辑器</h2>-->
+<form><!-- method="get" action="showcontent.php" id="form1"-->
+    <input type="button" id="btn" value="提交" onclick="submit_pre()"/>
+    <textarea id="code" name="code" charset="utf-8">
+<SQLTEST>
+    <CONTENT> 系统角色SYS_ADMIN所具有的权限</CONTENT>
+    /*
+    测试点列表
+    1.CREATE DATABASE;(完成)
+    2.ALTER DATABASE;(完成)
+    3.DROP DATABASE;(完成)
+    4.CREATE LOGIN;(完成)
+    5.ALTER LOGIN;(完成)
+    6.DROP LOGIN;(完成)
+    7.CONNECT DATABASE;(完成)
+    8.BACKUP DATABSAE;(完成)
+    9.RESTORE DATABASE;(完成)
+    10.不具有权限的错误测试(包括:不能建立、修改、删除非系统登录);(完成)
+    */
+    /*
+    修改记录列表
+    序号 修改类型 修改内容 修改人 修改日期
+    1 创建 田桦 645-9-14
+    2 重写 丁飞 645-11-23
+    3 MODIFY 因为备份还原语法变动，修改测试点8，9 冯源 2006-11-30
+    4 修改 修改测试点中
+    <NEWCONNECTEXECUTE>关键字 方静 2007-3-12
+        5 修改 SYSDBA、SYSSSO、SYSAUDITOR登陆可以被修改密码 丁飞 2007-08-31
+        */
+        /* +++++++++++++++++++++ 测试点1：开始 创建数据库+++++++++++++++++++++ */
+        <SQL_CASE>
+            <SQL> CREATE DATABASE DB01_SEC_00000 DATAFILE &apos;DB01.DBF&apos; size 64;</SQL>
+        </SQL_CASE>
+        - - - - - - - - - - - 测试点1：结束 - - - - - - - - - - -
+        +++++++++++++++++++++ 测试点2：开始 修改数据库+++++++++++++++++++++
+        <SQL_CASE>
+            <SQL> ALTER DATABASE DB01_SEC_00000 MODIFY DATAFILE &apos;DB01.DBF&apos; INCREASE 5;</SQL>
+        </SQL_CASE>
+        /* - - - - - - - - - - - 测试点2：结束 - - - - - - - - - -*/
+</SQLTEST>
+    </textarea>
+</form>
+	<div style="margin-top:20px"></div>
+	<textarea id="preview"></textarea>
+<script>
+    var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+        lineNumbers: true,
+        extraKeys: {"Ctrl": "autocomplete"},//输入s然后ctrl就可以弹出选择项
+        mode: {name: "text/x-mysql"}, //x-mysql
+//        theme: "ambiance"//主题
+    });
+	var accept_editor = CodeMirror.fromTextArea(document.getElementById("preview"), {
+        lineNumbers: true,
+        extraKeys: {"Ctrl": "autocomplete"},//输入s然后ctrl就可以弹出选择项
+        mode: {name: "text/x-mysql"}, //x-mysql
+//        theme: "ambiance"//主题
+    });
+	
+    function submit_pre() {
+        //var preview = document.getElementById('preview');
+        //        getValue()是经过转义之后的
+        var txt = editor.getValue();
+        console.log(txt);
+        //preview.innerText = txt;
+		//alert(txt);
+
+		
+        //        console.log(editor.toTextArea());
+        //return false;
+        $.ajax({
+            url: 'showcontent.php'
+            , type: 'get'
+            , data: {
+                'code': txt
+            },
+			/*error:function(){
+				alert("error");
+			},*/
+            success: function (data) {
+//                alert(data);
+                console.log(data);
+                accept_editor.getDoc().setValue(data);
+                accept_editor.refresh();
+            }
+        });
+    }
+    function addcode() {
+        var content = "SELECT * FROM TABLE;"
+    }
+</script>
+</body>
+</html>

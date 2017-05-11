@@ -1,0 +1,72 @@
+{"total":20,
+  "rows":[
+    {"group":"登录信息","name":"服务器","value":"DMDB","editor":{
+      "type": "combobox",
+      "options":{
+        "data": [{
+          "value": "DMDB", "text": "DMDB"
+        },{
+          "value": "ORACLE", "text": "ORACLE"
+        },{
+          "value": "MySql", "text": "MySql"
+        }],
+        "panelHeight": "auto"
+      }
+    }},
+    {"group":"登录信息","name":"服务器","value":"localhost","editor":"text"},
+    {"group":"登录信息","name":"端口号","value":"5236","editor":"numberbox"},
+    {"group":"登录信息","name":"初始库","value":"SYSTEM","editor":"text"},
+    {"group":"登录信息","name":"用户","value":"SYSDBA","editor":"text"},
+    {"group":"登录信息","name":"口令","value":"SYSDBA","editor":"text"},
+
+    {"group":"消息设置","name":"保存消息数","value":"5000","editor":"numberbox"},
+    {"group":"消息设置","name":"消息检察间隔","value":"300","editor":"numberbox"},
+    {"group":"消息设置","name":"是否显示输出信息","value":"true","editor":{
+      "type": "checkbox",
+      "options":{
+        "on": true,
+        "off": false
+      }
+    }},
+    {"group":"消息设置","name":"是否自动保存消息到文件","value":"true","editor":{
+      "type": "checkbox",
+      "options":{
+        "on": true,
+        "off": false
+      }
+    }},
+
+    {"group":"运行设置","name":"线程个数数","value":"1","editor":"numberbox"},
+    {"group":"运行设置","name":"自动清空消息区","value":"true","editor":{
+      "type": "checkbox",
+      "options":{
+        "on": true,
+        "off": false
+      }
+    }},
+    {"group":"运行设置","name":"发生错误后继续往下执行","value":"false","editor":{
+      "type": "checkbox",
+      "options":{
+        "on": true,
+        "off": false
+      }
+    }},
+
+    {"group":"高级选项","name":"保存出错前执行的语句","value":"false","editor":{
+      "type": "checkbox",
+      "options":{
+        "on": true,
+        "off": false
+      }
+    }},
+    {"group":"高级选项","name":"语句数","value":"20","editor":"numberbox"},
+
+    {"group":"重启服务器设置","name":"服务器断开时自动重启","value":"false","editor":{
+      "type": "checkbox",
+      "options":{
+        "on": true,
+        "off": false
+      }
+    }},
+    {"group":"重启服务器设置","name":"检察间隔(秒)","value":"20","editor":"numberbox"}
+]}

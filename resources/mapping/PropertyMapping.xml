@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xq.dao.PropertyDao">
+
+    <!--获取所有property信息-->
+    <select id="selectProperty" resultType="com.xq.model.Property">
+        SELECT *
+        FROM table_property
+    </select>
+
+</mapper>

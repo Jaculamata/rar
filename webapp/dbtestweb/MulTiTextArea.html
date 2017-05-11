@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="easyui/demo/demo.css">
+    <script type="text/javascript" src="easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
+    <!--<script type="text/javascript" src="wei/css/editbox.css"></script>-->
+    <link type="text/css" rel="stylesheet" href="wei/css/editbox.css"/>
+
+    <title>Title</title>
+    <!--//使用text1 对textarea进行样式控制-->
+    <style>
+        .buttons-div{
+            width:100%;
+            height:100%;
+            background-color: whitesmoke;
+            /*position: relative;*/
+            /*bottom: 600px;*/
+            /*display: inline-block;*/
+        }
+#pp{
+    background-color: white;
+    /*center:true;*/
+
+}
+        .text1
+        {
+            font-family: sans-serif;font-size:13px;
+            width:100%;
+            height:100%;
+            center:true
+        }
+        input{
+            display: inline-block;
+        }
+        .myinput{
+            /*position: relative;*/
+            /*top: 0 ;*/
+            align:absmiddle;
+            margin:2px;
+            float:left;
+            height:25px;
+            /*width:50px;*/
+            /*margin: 10px;*/
+            /*center:true;*/
+            /*display: inline-block;*/
+            font-family: sans-serif;
+            font-size: 13px;
+        }
+    </style>
+</head>
+
+<body>
+<div id="pp"  style="padding:10px;">
+    <div id="ff">
+
+    </div>
+    <div class="buttons-div">
+    <form id="bt" target="_self"></form>
+    <!--<button id="mybt1" >按钮一</button><button id="mybt2">按钮二</button>-->
+    </div>
+</div>
+<script>
+
+//    var jsonTransfer={};
+//    $.ajaxSettings.async = false;
+//    $.getJSON('TextArea.json',function(jsonData){
+//       jsonTransfer=eval(jsonData);
+//    });
+//    $.ajax()
+            var click=false;
+
+            $.ajax({
+                type: "GET",
+                url: "TextArea.json",
+                dataType: "json",
+                success: function(data){
+//                    alert("test "+data.allMsg[0]);
+//                    eval("("+data+")");
+                    var jsonTransfer=data;
+//                    alert(jsonTransfer.allMsg.length);
+                    var msgLength=jsonTransfer.allMsg.length;
+                    var chLength=jsonTransfer.allch.length;;
+//    alert(jsonTransfer.allMsg[1]+"---msg length: "+msgLength+"--ch length "+chLength+" "+jsonTransfer.allch[2]);
+                    var inputs = document.getElementById("ff");
+                    var btinputs=document.getElementById("bt");
+                    //    while(inputs.hasChildNodes()) //每次动态添加应该更新内容，当div下还存在子节点时 循环继续
+                    //    {
+                    //        inputs.removeChild(inputs.firstChild);
+                    //    }
+                    for (var i=0;i<msgLength;i++){
+                        var textarea = document.createElement("textarea");
+                        textarea.type="text";
+                        textarea.name="name_"+i;
+                        textarea.id=i;//给这个input赋予id值
+                        textarea.value=jsonTransfer.allMsg[i];
+                        textarea.readOnly=true;
+                        textarea.className="text1";
+//        textarea.rows=4;
+                        inputs.appendChild(textarea);
+                        inputs.appendChild(document.createElement("br"));
+                        //提交信息直接用表单提交，本来内容就是循环在Form里的，你应该懂吧
+                    };
+                    for (var i=0;i<chLength;i++){
+                        var buttons = document.createElement("input");
+                        buttons.type="button";
+//        alert(buttons.type);
+//        buttons.name="name_"+i;
+                        buttons.id=jsonTransfer.allch[i];//给这个input赋予id值
+                        buttons.value=jsonTransfer.allch[i];
+                        buttons.className="myinput";
+//        buttons.onclick='submit()';
+//        textarea.readOnly=true;
+//        textarea.cols=100;
+//        textarea.rows=4;
+                        btinputs.appendChild(buttons);
+//        btinputs.appendChild(document.createElement("br"));
+                        //提交信息直接用表单提交，本来内容就是循环在Form里的，你应该懂吧
+                    };
+                    $('#pp').dialog({
+                        width: 400,
+                        height: "100%",
+                        title:jsonTransfer.type,
+                        onClose:function(){
+                        if(!click){
+                            alert("test");
+                            $(".myinput:last").click();
+                        }
+                    }
+
+                    });
+                    $(document).ready(function(){
+                        $(".myinput").click(function(){
+                            click=true;
+                            jsonTransfer.allMsg.push(this.value);
+                            alert("I am clicked");
+                            var l=jsonTransfer.allMsg.length;
+//post的url自定
+//            $('#bt').submit(function(){
+                            $.post("treegrid_data.json",jsonTransfer,function (d){
+                                alert("the button is "+jsonTransfer.allMsg[l-1]);
+                                alert("success");
+                            });
+//            });
+                        });
+                    });
+//                    $('#resText').empty();   //清空resText里面的所有内容
+//                    var html = '';
+//                    $.each(data, function(commentIndex, comment){
+//                        html += '<div class="comment"><h6>' + comment['username']
+//                                + ':</h6><p class="para"' + comment['content']
+//                                + '</p></div>';
+//                    });
+//                    $('#resText').html(html);
+                }
+            });
+//alert(jsonTransfer.allMsg[0]);
+
+
+
+    //监听点击事件，确定点击的按钮是哪个，将相应的value添加到json的msg中
+
+
+
+    //    $.ajaxSettings.async = true;
+//    $(document).ready(function(){
+//        $(".btn").click(function(node){
+//            //被点击按钮的id
+////           ;
+////            $("#"+clickid).value;
+//            alert("test"+$(this).attr(id));
+//        });
+////        var val=$("input").value;
+////       jsonTransfer.allMsg.push(val);
+////        alert(jsonTransfer.allMsg[2]);
+////        $.ajax({
+////                type: "POST",
+////                url: "treegrid_data.json",
+////                data: jsonTransfer,
+////                contentType: "application/json; charset=utf-8",
+////                dataType: "json",
+////                success: function(){alert("success! ")}
+////            });
+//
+//    });
+//    $('#pp').dialog({
+//        width: 400,
+//        height: "100%",
+//        title:jsonTransfer.type,
+//
+//    })
+</script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+.dlg .content{
+	margin-top:10px;
+}
+
+.dlg .left{
+	position:relative;
+	display:inline-block;
+	height:100%;
+	width:45%;
+	float:left;
+	margin-left:10%;
+}
+
+.dlg .left span{
+	float:left;	
+}
+
+.dlg .right{
+	position:relative;
+	display:inline-block;
+	height:100%;
+	width:45%;
+	float:left;
+}
+
+.dlg .right span{
+	float:left;	
+}
+
+.dlg textarea{
+	height:200px;
+	border-radius:5px;
+	padding:5px 5px;
+	margin-top:10px;
+	margin-bottom:10px;
+}
+
+.dlg .text{
+	font-size:15px;
+}
+
+#btn{
+	font-family:Georgia,Serif,"Times New Roman";
+}

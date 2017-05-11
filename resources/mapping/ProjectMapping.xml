@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xq.dao.ProjectDao">
+
+    <!--获取所有property信息-->
+    <select id="selectProject" parameterType="String" resultType="com.xq.model.Project">
+        SELECT *
+        FROM table_project WHERE user=#{user}
+    </select>
+
+    <!--打开项目时更新最近打开项目的Projectid-->
+    <update id="updateid" parameterType="com.xq.model.User">
+        UPDATE table_manager SET recent_projectid=#{recent_projectid} WHERE user=#{user}
+    </update>
+
+    <!--先查询删除的项目是不是最近打开的项目-->
+    <select id="selet_recentid" parameterType="com.xq.model.User" resultType="java.lang.Integer">
+        SELECT recent_projectid
+        FROM table_manager WHERE user=#{user}
+    </select>
+
+    <!--1.如果删除的这个项目正好是最近打开的项目，则清空recent_projectid-->
+    <update id="update_recentid" parameterType="com.xq.model.User">
+        UPDATE table_manager SET recent_projectid=NULL WHERE user=#{user}
+    </update>
+
+    <!--2.删除项目时先删除project表中的-->
+    <delete id="deleteProject" parameterType="com.xq.model.Project">
+        DELETE FROM table_project WHERE user=#{user} AND projectid=#{projectid}
+    </delete>
+
+    <!--3.删除项目时删除menu表中对应的项目-->
+    <delete id="deleteMenu" parameterType="int">
+        DELETE FROM table_menu WHERE projectid=#{projectid}
+    </delete>
+
+    <!--4.删除项目时删除xml表中对应的内容-->
+    <delete id="deleteXml" parameterType="int">
+        DELETE FROM table_xml WHERE projectid=#{projectid}
+    </delete>
+
+    <!--删除项目时删除Project_Property表-->
+    <delete id="deletePP" parameterType="int">
+        DELETE FROM table_project_property WHERE projectid=#{projectid}
+    </delete>
+</mapper>

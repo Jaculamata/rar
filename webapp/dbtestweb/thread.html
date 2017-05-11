@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>多用户测试引擎执行</title>
+    <!--<script src="js/jquery.min.js"></script>-->
+    <link rel="stylesheet" type="text/css"
+          href="easyui/themes/bootstrap/easyui.css"/>
+    <link rel="stylesheet" type="text/css" href="easyui/themes/icon.css"/>
+    <script type="text/javascript" src="js/jquery1.7.min.js"></script>
+    <script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="easyui/locale/easyui-lang-zh_CN.js"></script>
+    <link rel="stylesheet" type="text/css" href="./font-awesome/css/font-awesome.min.css"/>
+    <link rel="stylesheet" type="text/css" href="./font-awesome/css/ui.css"/>
+    <script>
+        $(function () {
+            var scroll = $('#kztbody')[0]; //[0] 获取divelement
+            var s2 = document.getElementById("kztbody");
+            //console.log(scroll,s2);
+            timer = setInterval(function () {
+                $.ajax({
+                    url: '../getres.do',
+                    data:{
+                        //param:'123',//后台使用user取代param，不需要传此参数（lw 4.14)
+                        zl:'start'
+                    },
+                    cache: false,
+                    /*asyn: false,*/
+                    success: function (res) {
+                        if (res==null|| res.length==0){
+
+                        }
+                        else {
+                            res =  res.replace("\n","</br>");
+                            $('#list').append("<li>"+res+"</li>")
+//                                scroll.innerHTML = scroll.innerHTML+(res+'<br>'); .msg
+                            scroll.scrollTop = scroll.scrollHeight;
+                        }
+                    }
+                });
+            },200);
+
+            $('#start').click(function () {
+
+                $('#start').attr("disabled",true);
+                $('#end').attr("disabled",false);
+                timer = setInterval(function () {
+                    $.ajax({
+                        url: '../../get.do',
+                        data:{
+                            //param:'123',//后台使用user取代param，不需要传此参数（lw 4.14)
+                            zl:'start'
+                        },
+                        cache: false,
+                        /*asyn: false,*/
+                        success: function (res) {
+                            // console.log(res);
+                            if (res==null|| res.length==0){
+
+                            }
+                            else {
+                                $('#list').append("<li>"+res+"</li>")
+//                                scroll.innerHTML = scroll.innerHTML+(res+'<br>'); .msg
+                                scroll.scrollTop = scroll.scrollHeight;
+                            }
+                        }
+                    });
+                },200);
+            });
+            document.oncontextmenu = function () {
+                return false
+            };
+
+            document.onmousedown = function (e) {
+                e.preventDefault()
+//                var e = e || window.event
+//                alert('e'+e.button)
+                if (e.button == '2'){
+//                    alert('执行右键代码')
+
+                    $('#rmenu').menu('show',{
+                        left: e.pageX,
+                        top: e.pageY
+                    });
+                }
+            }
+
+            $('#end').click(function () {
+                $('#start').attr("disabled",false);
+                $('#end').attr("disabled",true);
+                $.ajax({
+                    url: '/get.do',
+                    data:{
+                        //param:'123',//后台使用user取代param，不需要传此参数（lw 4.14)
+                        zl:'end'
+                    },
+                    cache: false,
+                    success: function (res) {
+                        if (res ==1 )
+                            clearInterval(timer);
+                    },
+                    complete:function (XMLHttpRequest, textStatus) {
+                        clearInterval(timer);
+                    }
+                })
+            })
+            $('#kztbody').height($(window).height()-18);
+
+            $(window).resize(function (){
+                $('#kztbody').height($(window).height()-18);
+            });
+        });
+        function clearList() {
+            $('#list li').remove()
+        }
+
+    </script>
+    <style>
+        .toolbar{
+            position: fixed;
+            top: 0;
+        }
+        #kztbody{
+            /*position: fixed;
+            top: 25px;*/
+            margin: 0;
+            width: 100%;
+            height: 400px;
+            border: 1px dashed grey;
+            overflow-y:auto; /*控制Y方向的滚动条*/
+        }
+    </style>
+</head>
+<body>
+<div class="toolbar">
+    <!--<input id="num" type="text">
+    <button id="start">Start</button>
+    <button id="end">pause</button>-->
+</div>
+<div id="kztbody">
+    <div>
+        <ol id="list"></ol>
+    </div>
+</div>
+<div id="rmenu" class="easyui-menu" style="width: 30px; display: none;">
+    <!--放置一个隐藏的菜单Div-->
+    <!--具体的菜单事件请自行添加，跟toolbar的方法是基本一样的-->
+    <div id="btn_Delete" data-options="iconCls:'icon-remove'" onclick="javascript:clearList()">清空</div>
+</div>
+
+</body>
+</html>

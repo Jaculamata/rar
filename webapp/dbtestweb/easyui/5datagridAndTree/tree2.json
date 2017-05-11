@@ -1,0 +1,33 @@
+[{
+  "id":1,
+  "text":"FolderTest",
+  "iconCls":"icon-save",
+  "children":[{
+    "text":"File1",
+    "checked":true
+  },{
+    "text":"Books",
+    "state":"open",
+    "attributes":{
+      "url":"http://love.hustxq.cn",
+      "price":100
+    },
+    "children":[{
+      "text":"百度",
+      "url":"http://love.hustxq.cn",
+      "checked":true
+    },{
+      "id": 8,
+      "text":"Sub Bookds",
+      "state":"closed"
+    }]
+  }]
+},{
+  "text":"Languages",
+  "state":"closed",
+  "children":[{
+    "text":"Java"
+  },{
+    "text":"C#"
+  }]
+}]

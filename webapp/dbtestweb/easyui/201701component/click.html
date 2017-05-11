@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+
+</head>
+<body>
+
+<input type='text' value="点击显示div" class="button"/>
+<div class="demo" style="width:100px; height:100px; border: 1px solid red ;"></div>
+
+<script src="../jquery.min.js"></script>
+<script>
+  $(function () {
+    $(".button").click(function (e) {
+      e.preventDefault();
+      $(".demo").show();
+      console.log('show');
+    });
+    $(document).click(function () {
+      $(".demo").click(function () {
+        return;
+      });
+      $(".demo").hide();
+      console.log('hide2');
+    });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+#userRgl .operation{
+    margin-left:2px;
+    display:inline-block;
+}
+.user-search{
+    float:right;
+    display:inline-block;
+    vertical-align: middle;
+}
+
+#editPwd .pwdInput td{
+    padding: 5px;
+}
+
+#addUserInfo .userInput td{
+    padding: 10px 5px;
+}
+
+#editPwd table td .text{
+    margin-left: 15px;
+    color: red;
+}
+
+#editPwd .textbox {
+    width: 150px;
+    height:22px;
+    padding:0 2px;
+}
+
+#addUserInfo .textInput{
+    height:22px;
+    padding:0 2px;
+}

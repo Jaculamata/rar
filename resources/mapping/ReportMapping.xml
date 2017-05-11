@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xq.dao.ReportDao">
+
+    <!--4.17(lw)获取测试报告内容    4.27修改-->
+    <select id="getReport" parameterType="com.xq.model.Report" resultType="com.xq.model.Report">
+        select *
+        from table_report
+        where projectid=#{projectid} and xml_title like #{xml_title}
+        order by xml_title asc
+    </select>
+
+    <!--4.17(lw)查找节点的text-->
+    <select id="selectMenuText" parameterType="com.xq.model.MenuItem" resultType="String">
+        select text from table_menu where id=#{id} and fj=#{fj} and projectid=#{projectid}
+    </select>
+
+    <!--4.17(lw)获取项目名-->
+    <select id="selectProjectName" parameterType="int" resultType="String">
+        select name from table_project where projectid=#{projectid}
+    </select>
+    <!-- 4.18(ht)删除测试结果 -->
+    <delete id="delete" parameterType="com.xq.model.Report">
+        DELETE FROM table_report WHERE xml_title=#{xml_title} AND projectid=#{projectid}
+    </delete>
+    <!-- 4.18(ht)保存测试结果到数据库 -->
+    <insert id="save" parameterType="com.xq.model.Report">
+        INSERT INTO table_report(xml_title,projectid,result,detail) VALUES (#{xml_title},#{projectid},#{result},"test\n")
+    </insert>
+    <!-- 4.18(ht)更新测试结果到数据库 -->
+    <update id="update" parameterType="com.xq.model.Report">
+        UPDATE table_report SET detail=CONCAT(detail,"&lt;w:br/&gt;",#{detail}) WHERE xml_title=#{xml_title} AND projectid=#{projectid}
+    </update>
+    <!-- 4.18(ht)select测试结果到数据库 -->
+    <select id="select" parameterType="com.xq.model.Report" resultType="int">
+        SELECT COUNT(*) FROM table_report WHERE xml_title=#{xml_title} AND projectid=#{projectid}
+    </select>
+    <!-- 4.24(lw)查询所测安全等级脚本总数   4.27修改 -->
+    <select id="selectScriptNum" parameterType="com.xq.model.MenuItem" resultType="int">
+        SELECT COUNT(*)
+        FROM table_menu
+        WHERE projectid=#{projectid} and type=#{type} and fj like #{fj}
+    </select>
+
+    <!-- 4.24(lw)查询当前安全等级已测脚本数量     4.27修改 -->
+    <select id="selectTestedNum" parameterType="com.xq.model.Report" resultType="int">
+        SELECT COUNT(*)
+        FROM table_report
+        WHERE projectid=#{projectid} and xml_title like #{xml_title}
+    </select>
+    
+    <!-- 4.24(lw)查询当前安全等级测试结果为某值的数量     4.27修改 -->
+    <select id="selectResultNum" parameterType="com.xq.model.Report" resultType="int">
+        SELECT COUNT(*)
+        FROM table_report
+        WHERE projectid=#{projectid} and result=#{result} and xml_title like #{xml_title}
+    </select>
+    
+    <!-- 4.27(lw)查询menu表中安全功能子目录 -->
+    <select id="selectSecurityDir" parameterType="com.xq.model.MenuItem" resultType="com.xq.model.MenuItem">
+        SELECT *
+        FROM table_menu
+        WHERE projectid=#{projectid} and fj=#{fj}
+    </select>
+
+    <!-- 4.27(lw)查询脚本内容 -->
+    <select id="selectXmlContent" parameterType="com.xq.model.Xml" resultType="com.xq.model.Xml">
+        SELECT * FROM table_xml WHERE projectid=#{projectid} and title=#{title}
+    </select>
+
+    <!-- 5.9(lw)查询脚本类型数量 -->
+    <select id="selectScriptTypeNum" parameterType="com.xq.model.Xml"  resultType="int" >
+  SELECT COUNT(*)
+   FROM table_xml
+   WHERE projectid=#{projectid} and type=#{type}
+    </select>
+
+</mapper>

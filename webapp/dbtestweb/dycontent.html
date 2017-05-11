@@ -1,0 +1,222 @@
+
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+	if (request.getSession().getAttribute("loginUser") == null){
+		response.sendRedirect("index.html");
+	}
+%><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="easyui/demo/demo.css">
+    <script type="text/javascript" src="easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
+    <!--<script src="js/jquery.min.js"></script>-->
+    <!--<script type="text/javascript" src="js/tabs.js"></script>-->
+    <script>
+//       $(function(){
+//           $('#mybt').bind('click',function(){
+//               alert('test');
+//
+//
+//           })  ;
+//       });
+
+//        $(function () {
+//            var LocString = String(window.document.location.href);
+//            console.log("href",LocString);
+//            function getValue(key) {
+//                var rs = new RegExp("(^|)" + key + "=([^&]*)(&|$)", "gi")
+//                        .exec(LocString),tmp;
+//                if (tmp = rs){
+//                    console.log("tmp",tmp);
+//                    return tmp[2];
+//                }
+//                return "null";
+//            }
+//            var content = 'id:'+getValue('id')+'<br>'+'state:'+getValue('state')
+//            $('#content').html(content);
+//
+//        });
+
+
+
+//        $('#”treeTaocan2“').datagrid({
+//            width: ($(window).width()*0.99),
+//            height:($(window).height()*0.98)
+//        });
+//        function myLoadFilter(data,parentId){
+//            function setData(){//重新整理数据的children属性
+//                var todo = [];
+//                for(var i=0; i<data.length; i++){
+//                    todo.push(data[i]);//数组末端添加 将源数据添加到数组中便于后续利用
+//                }
+//                while(todo.length){
+//                    var node = todo.shift();//方法用于把数组的第一个元素从其中删除，并返回第一个元素的值。
+//                    if (node.children){//如果有子节点
+//                        node.state = 'closed';
+//                        node.children1 = node.children;
+//                        node.children = undefined;
+//                        todo = todo.concat(node.children1);//数组联结
+//                    }
+//                }
+//            }
+//
+//            setData(data);
+//            var tg = $(this);//当前页面
+//            var opts = tg.treegrid('options');//获取属性表格的属性对象
+//            //节点展开前执行的方法  row是行数据
+//            opts.onBeforeExpand = function(row){
+//                if (row.children1){
+//                    tg.treegrid('append',{
+//                        parent: row[opts.idField],//父节点id
+//                        data: row.children1//节点数据
+//                    });
+//                    row.children1 = undefined;
+//                    tg.treegrid('expand', row[opts.idField]);//打开某个节点
+//                }
+//                return row.children1 == undefined;
+//            };
+//            return data;
+//        }
+//        $("#data_grid").datagrid({
+//                    url:'treegrid_data.json',
+//                    method:'GET',
+//                    idField:id,
+//                    rownumbers:true,
+//                    width:700,
+//                    height:500
+//                }
+//
+//        )
+
+
+
+
+
+    </script>
+</head>
+<body>
+<button id="mybt"  onclick="getSelected()" >执行</button>
+<table id="tg" class="easyui-treegrid" ></table>
+<!--<table id=”mytg“ title="Folder Browser" class="easyui-treegrid" data-options="-->
+<!--url:'get_data.do',-->
+<!--idField:'id',-->
+<!--rownumbers:true,-->
+<!--method:'get',-->
+<!--treeField:'text',-->
+<!--singleSelect:false,-->
+<!--checkbox:true-->
+
+<!--">-->
+    <!--<thead>-->
+    <!--<tr>-->
+        <!--<th id ="ck" data-options="field:'id'" checkbox="true"></th>-->
+        <!--<th data-options="field:'text'" width="220" >Name</th>-->
+        <!--<th data-options="field:'type'" width="100" align="right">Description</th>-->
+        <!--<th data-options="field:'url'" width="150">Content</th>-->
+    <!--</tr>-->
+    <!--</thead>-->
+<!--</table>-->
+<div id="content">
+
+</div>
+<script>
+    var test=window.frameElement.id;
+//    alert(test);
+//alert(dyindex);
+    var path='../etree/';
+    $('#tg').treegrid({
+        method:"GET",
+        url:path+'get_treegrid.do'+"?id="+test,
+        rownumbers: true,
+//        formatter: function (node) {
+////                    $.parser.parse();
+//            return '<a>'+node.text+'</a>';
+//        },
+        treeField:"text",
+        idField:"id",
+        parentField:'fj',
+        checkbox:true,
+        dnd: false,
+        singleSelect:false,
+        columns:[[
+            {filed:'ck',checkbox:true,},
+            {field:'fj',title:'fj',width:100},
+            {field:'id',title:'id',width:100},
+            {field:'text',title:'text',width:100},
+            {field:'type',title:'type',width:100,align:'right'},
+            {field:'url',title:'url',width:100},
+            {filed:'state',title:'state',width:100},
+            {filed:'level',title:'level',width:100},
+            {filed:'attr',title:'attr',width:100}
+        ]],
+//        loadFilter:function(data,parentId){
+////            alert("test");
+//            return  new TreeHelper(data).dataTransferer();
+//        }
+    });
+    function TreeHelper(list){
+        this.list = list;
+    }
+    (function(TreeHelper){
+        function getAllChildren(list,item){
+            var children = getNextLevelChildren(list,item);
+            for(var i=0,ii=children.length;i<ii;i++){
+                getAllChildren(list,children[i]);
+            }
+        }
+        //遍历list剩下的数据，找到item的下一层的子节点
+        function getNextLevelChildren(list,item){
+            var children = [];
+            for(var i=list.length-1;i>=0;i--){
+                var mid = list[i];
+                if(mid.fj == item.id){
+                    delete mid.fj;
+                    children.push(mid);
+                    list.splice(i,1);
+                }
+            }
+            if(children.length > 0){
+                item.children = children;
+            }
+            return children;
+        }
+        TreeHelper.prototype.dataTransferer = function(){
+            var list = this.list;
+            //根节点必须在数组前面
+            list.sort(function(a,b){
+                if(a.fj > b.fj){
+                    return 1;
+                }else{
+                    return -1;
+                }
+            });
+            var item,
+                    result = [];
+            //遍历根节点，递归处理其所有子节点的数据
+            //每处理完一个根节点，就将其及其所有子节点从list中删除，加快递归速度
+            while(list.length){
+                item = list[0];
+                list.splice(0,1);
+                delete item.fj;
+                getAllChildren(list,item);
+                result.push(item);
+            }
+            return result;
+        };
+    })(TreeHelper);
+</script>
+</body>
+</html>
+<!--private String id;-->
+<!--private String fj;-->
+<!--private int level;-->
+<!--private String text;-->
+<!--private String attr;-->
+<!--private String url;-->
+<!--private String state;-->
+<!--private String type;-->

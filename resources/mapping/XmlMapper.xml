@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xq.dao.XmlDao">
+<!--修改 parameterType为com.xq.model.Xml-->
+    <select id="selectXml" parameterType="com.xq.model.Xml" resultType="com.xq.model.Xml">
+        SELECT * FROM table_xml WHERE title=#{title} AND projectid=#{projectid}
+    </select>
+
+    <insert id="insertXml" parameterType="com.xq.model.Xml" >
+        insert into table_xml(title,content,projectid,type) VALUES (#{title},#{content},#{projectid},#{type})
+    </insert>
+
+    <update id="updateXml" parameterType="com.xq.model.Xml">
+        UPDATE table_xml
+        SET content = #{content},type=#{type}
+        WHERE title = #{title} AND projectid=#{projectid}
+    </update>
+
+    <insert id="insertStandard" parameterType="com.xq.model.Xml" >
+        insert into table_xml(title,description,projectid,content) VALUES (#{title},#{description},#{projectid},#{content})
+    </insert>
+
+    <update id="updateStandard" parameterType="com.xq.model.Xml">
+        UPDATE table_xml
+        SET content = #{content}, description = #{description}
+        WHERE title = #{title} AND projectid=#{projectid}
+    </update>
+
+    <delete id="deleteXml" parameterType="com.xq.model.Xml">
+        DELETE
+        FROM table_xml
+        WHERE title = #{title} AND projectid=#{projectid}
+    </delete>
+
+    <select id="getAllXml" parameterType="com.xq.model.Xml" resultType="com.xq.model.Xml">
+        SELECT * FROM table_xml WHERE title=#{title} AND projectid=#{projectid}
+    </select>
+
+    <!--4.23新增，新建项目后，若xml内容为空则从模板项目中查询xml内容-->
+    <select id="getXmlFromModel" parameterType="com.xq.model.Xml" resultType="com.xq.model.Xml">
+        SELECT * FROM table_xml WHERE title=#{title} AND projectid=#{projectid}
+    </select>
+</mapper>

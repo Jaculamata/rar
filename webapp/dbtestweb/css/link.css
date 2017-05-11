@@ -1,0 +1,43 @@
+A:link {
+    COLOR: #000000;
+    FONT-FAMILY: arial;
+    TEXT-DECORATION: none
+}
+
+A:visited {
+    COLOR: #0000FF;
+    FONT-FAMILY: arial;
+    TEXT-DECORATION: none
+}
+
+A:active {
+    COLOR: #FF0000;
+    FONT-FAMILY: arial;
+    TEXT-DECORATION: none
+}
+
+A:hover {
+    COLOR: #FF0000;
+    FONT-FAMILY: arial;
+    TEXT-DECORATION: underline
+}
+.logo{
+    width:180px;
+    height:35px;
+    line-height:35px;
+    text-align:center;
+    font-size:24px;
+    font-weight:bold;
+    font-style: italic;
+    color:#fff;
+}
+.logout {
+    /*float:right;
+    text-align: right;*/
+    padding:15px 15px 0 0;
+    color:#fff;
+    position: absolute;
+    right: 0;
+
+}
+.e-icon{padding-top:3px;}

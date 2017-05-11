@@ -1,0 +1,27 @@
+[
+  {
+    "ck":0,
+    "id":1,
+    "text":"n1",
+    "type":"test",
+    "url":"just a test",
+    "children":[
+      {
+        "ck":0,
+        "id":2,
+        "text":"n2",
+        "type":"test",
+        "url":"test",
+        "children":[
+          {
+            "ck":0,
+            "id":3,
+            "text":"test",
+            "type":"test",
+            "url":"test"
+          }
+        ]
+      }
+    ]
+  }
+]

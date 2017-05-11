@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="../themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../themes/icon.css" />
+    <script src="../jquery.min.js"></script>
+    <script src="../jquery.easyui.min.js"></script>
+    <style>
+        span{
+            width:100px;
+            /*text-align: right;*/
+        }
+    </style>
+</head>
+<body>
+<!--1.通过标签创建验证框-->
+<!--
+Email:<input id="vv" class="easyui-validatebox"  data-options="required:true, validType:'email'"/>
+-->
+<!--<ul class="news">
+    <li><span>2010-8-26</span>span右对齐,换行显示的解决方法</li>
+    <li><span>2010-8-27</span>span右对齐</li>
+</ul>-->
+<!--2.通过js创建验证框-->
+<!--<span>email:</span><input id="vv" />
+<br>-->
+<span>新密码：</span><input id="pwd" name="pwd" type="password" class="easyui-validatebox"
+data-options="required:true" />
+<br>
+<span>确认密码：</span><input id="rpwd" name="rpwd" type="password" class="easyui-validatebox"
+       data-options="required:true" validType="equals['#pwd']"/>
+<br>
+
+<input class="easyui-validatebox" data-options="validType:'minLength[5]'">
+<script src="../js/validatebox.js"></script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="../themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../themes/icon1.css" />
+    <link rel="stylesheet" href="../../font-awesome/css/font-awesome.min.css">
+    <script src="../jquery.min.js"></script>
+    <script src="../jquery.easyui.min.js"></script>
+    <style>
+        .l-btn-icon,.panel-icon,.menu-icon,.tabs-icon {
+            font-family:FontAwesome;
+            font-size:14px !important;
+            line-height:normal !important;
+            text-rendering:auto;
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
+            color:#6699cc;text-align:center;
+        }
+        .tabs-icon {
+            font-size:16px !important;
+            font-weight:normal;
+        }
+    </style>
+</head>
+<body>
+<!--通过js直接创建对话框-->
+<!--<div id="dlg">
+dialog content.
+</div>-->
+
+<!--通过相关标签创建对话框-->
+<div id="win" class="easyui-dialog" title="my dialog" style="width: 600px;height: 400px;padding: 10px"
+    toolbar="#dlg-toolbar" buttons="#dlg-buttons">
+    Dialog content.
+    <i class="fa fa-weixin "></i>微信
+    <a id="add1" class="easyui-linkbutton" data-options="iconCls:'fa-plus',plain:true">添加</a>
+    <a id="batchDelete" class="easyui-linkbutton" data-options="iconCls:'fa-trash',plain:true">批量删除</a>
+    <a id="batchEdit" class="easyui-menubutton" data-options="menu:'#batchEditMenu',iconCls:'fa-th',plain:true">批量操作</a>
+    <a id="superSearch" class="easyui-linkbutton" data-options="iconCls:'fa-search',plain:true">组合查询</a>
+    <a id="filter" class="easyui-menubutton" data-options="menu:'#filterMenu',iconCls:'fa-filter',plain:true">筛选</a>
+    <a id="sort" class="easyui-menubutton" data-options="menu:'#sortMenu',iconCls:'fa-sort',plain:true">排序</a>
+    <a id="refresh" class="easyui-linkbutton" data-options="iconCls:'fa-refresh',plain:true">刷新</a>
+    <a id="help" class="easyui-linkbutton" data-options="iconCls:'fa-question-circle-o',plain:true">帮助</a>
+</div>
+
+<div id="dlg-toolbar">
+    <table cellpadding="0" cellspacing="0" style="width: 100%">
+        <tr>
+            <td>
+                <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true">Edit</a>
+                <a href="#" class="easyui-linkbutton" iconCls="icon-help" plain="true">Help</a>
+                <a id="add" class="easyui-linkbutton" data-options="iconCls:'fa-plus',plain:true">添加</a>
+            </td>
+            <td style="text-align: right">
+                <input /><a href="#" class="easyui-linkbutton" iconCls="icon-search" plain="true">Search</a>
+            </td>
+        </tr>
+    </table>
+</div>
+<div id="dlg-buttons">
+    <table cellpadding="0" cellspacing="0" style="width: 100%">
+        <tr>
+            <td style="text-align: left">
+                <a class="easyui-linkbutton" href="#" iconCls="icon-ok"></a>
+            </td>
+            <td>
+                <a href="#" class="easyui-linkbutton" iconCls="icon-save" plain="true" onclick="javascript:alert('save click');">Save</a>
+                <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" plain="true" onclick="javascript:alert('cancel click');">Cancel</a>
+            </td>
+        </tr>
+    </table>
+</div>
+<script src="../js/dialog.js"></script>
+</body>
+</html>

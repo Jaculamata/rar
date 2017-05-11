@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xq.dao.MenuDao">
+
+    <!--获取所有子节点-->
+    <select id="getChildren" parameterType="com.xq.model.MenuItem" resultType="com.xq.model.MenuItem">
+        SELECT *
+        FROM table_menu
+        WHERE fj = #{fj} AND projectid=#{projectid}
+    </select>
+    <!--treegrid获得所有子节点-->
+    <select id="getChildren2" parameterType="String" resultType="com.xq.model.MenuItem">
+        SELECT *
+        FROM table_menu
+        WHERE fj LIKE #{fj}"%"
+    </select>
+
+    <!--获取最大子节点id-->
+    <select id="maxId" parameterType="com.xq.model.MenuItem" resultType="java.lang.Integer">
+        SELECT max(id) as id
+        FROM table_menu
+        WHERE fj = #{fj} AND projectid=#{projectid}
+    </select>
+
+    <!--更新父节点状态-->
+    <update id="updateFj" parameterType="com.xq.model.MenuItem">
+        update table_menu set state=#{state},type=#{type} where fj=#{fj} AND id=#{id} AND projectid=#{projectid}
+    </update>
+
+    <!--插入子节点-->
+    <insert id="insertFj" parameterType="com.xq.model.MenuItem">
+        insert into table_menu (id, fj,projectid,level,text, state, type) VALUES (#{id}, #{fj},#{projectid},#{level},#{text},#{state},#{type})
+    </insert>
+
+    <!--更新父节点-->
+    <update id="updateText" parameterType="com.xq.model.MenuItem">
+        update table_menu set text=#{text} where fj=#{fj} AND id=#{id} AND projectid=#{projectid}
+    </update>
+
+    <!--删除节点-->
+    <delete id="destroy" parameterType="com.xq.model.MenuItem">
+        delete from table_menu WHERE fj=#{fj} AND id=#{id} AND projectid=#{projectid}
+    </delete>
+    <!--删除其下所有子节点-->
+    <delete id="destroyAll" parameterType="com.xq.model.MenuItem">
+        delete from table_menu WHERE fj LIKE #{fj} AND projectid=#{projectid}
+    </delete>
+    <!--查看该节点是否有子节点-->
+    <select id="countFj" parameterType="com.xq.model.MenuItem" resultType="java.lang.Integer">
+        select count(*) from table_menu where fj=#{fj} AND projectid=#{projectid}
+    </select>
+
+    <!--4.9删除节点的同时先查询xml表中有没有内容-->
+    <select id="selectXml" parameterType="com.xq.model.Xml" resultType="java.lang.Integer">
+        select count(*) FROM table_xml WHERE title=#{title} AND projectid=#{projectid}
+    </select>
+
+    <!--4.9删除节点的同时如果xml表中有内容则删除xml的内容-->
+    <delete id="deleteXml" parameterType="com.xq.model.Xml">
+        delete from table_xml WHERE title=#{title} AND projectid=#{projectid}
+    </delete>
+
+    <!--4.9查询所有子节点xml-->
+    <select id="selectAll" parameterType="com.xq.model.Xml" resultType="java.lang.Integer">
+        select count(*) from table_xml WHERE title LIKE #{title} AND projectid=#{projectid}
+    </select>
+
+    <!--4.9删除所有子节点xml的内容-->
+    <delete id="deleteAll" parameterType="com.xq.model.Xml">
+        delete from table_xml WHERE title LIKE #{title} AND projectid=#{projectid}
+    </delete>
+
+    <!--4.12查询最近一次的Projectid-->
+    <select id="getProjectid" parameterType="String" resultType="java.lang.Integer">
+        select recent_projectid from table_manager WHERE user=#{user}
+    </select>
+    <!--4.12查询最近一次的安全等级-->
+    <select id="getDescription" parameterType="com.xq.model.Project" resultType="String">
+        select description from table_project WHERE user=#{user} and projectid=#{projectid}
+    </select>
+
+    <!--文件重命名时先判断同一个文件夹下面有没有相同的文件名-->
+    <select id="selectText" parameterType="com.xq.model.Menu" resultType="com.xq.model.Menu">
+        SELECT * FROM table_menu WHERE fj=#{fj} AND text =#{text} AND projectid=#{projectid}
+    </select>
+</mapper>

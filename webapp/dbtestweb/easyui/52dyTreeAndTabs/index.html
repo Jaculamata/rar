@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="../themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../themes/icon.css"/>
+    <script src="../jquery.min.js"></script>
+    <script src="../jquery.easyui.min.js"></script>
+</head>
+<body class="easyui-layout">
+<!--  style="width:600px;height:400px;" -->
+<!--1.标准全部局-->
+<div data-options="region:'north',title:'North Title',split:true" style="height:100px;">
+    <!--<a href="menutop.html"></a>-->
+    <a href="javascript:void(0)" id="mb" class="easyui-menubutton"
+       data-options="menu:'#mmfile',iconCls:'icon-save'">Edit</a>
+    <div id="mmfile" style="width:150px;">
+        <div data-options="iconCls:'icon-undo'">Undo</div>
+        <div data-options="iconCls:'icon-redo'">Redo</div>
+        <div class="menu-sep"></div>
+        <div data-options="iconCls:'icon-cut'" onclick="javascript:alert('cut');">Cut</div>
+        <div>Copy</div>
+        <div>Paste</div>
+        <div class="menu-sep"></div>
+        <div data-options="iconCls:'icon-remove'">Delete</div>
+        <div>Select All</div>
+    </div>
+</div>
+<div data-options="region:'south',title:'South Title',split:true" style="height:100px;"></div>
+<div data-options="region:'east',iconCls:'icon-reload',title:'East',split:true" style="width:100px;"></div>
+<div data-options="region:'west',title:'West',split:true" style="width:180px;">
+    <ul class="easyui-tree" id="treemenu">
+    </ul>
+</div>
+<div data-options="region:'center',title:'center title', noheader:true," style="overflow: hidden;">
+    <!--<div id="contentTabs" class="easyui-tabs" style="width: 100%; height: 100%;"
+    data-options="fit:true">-->
+    <div id="contentTabs" class="easyui-tabs" fit="true" border="false">
+        <div title="起始页" iconCls="icon-house"
+             style="padding: 10px 10px; display: block;">欢迎来到后台管理系统！
+        </div>
+        <!--<a href="../../test_1_login/js.html"></a>-->
+    </div>
+</div>
+
+<!--右键菜单定义如下：-->
+<div id="mm" class="easyui-menu" style="width:120px;">
+    <!--<div onclick="insert()" data-options="iconCls:'icon-add'">插入兄弟节点</div>-->
+    <div onclick="append()" data-options="iconCls:'icon-add'">添加</div>
+    <div onclick="remove()" data-options="iconCls:'icon-remove'">移除</div>
+</div>
+
+<!--2.创建嵌套布局-->
+<!--<div data-options="region: 'north' " style="height: 100px;"></div>
+<div data-options="region:'center'">
+    <div class="easyui-layout" data-options="fit:true">
+        <div data-options="region:'west' , collapsed:true " style="width: 180px;"></div>
+        <div data-options="region:'center' "></div>
+    </div>
+</div>-->
+<script>
+    /*插入兄弟节点*/
+    /*function insert() {
+        if (tnode) {
+            $('#treemenu').tree('insert', {
+                parent: tnode.target,
+                data: [{
+                    id: tnode.id+1,
+                    text: 'node' + (tnode.id +1),
+                }],
+
+            });
+        }
+    }*/
+    /*添加子节点*/
+    function append() {
+        /*alert('append');
+         console.log(tnode);*/
+        if (tnode) {
+            $('#treemenu').tree('append', {
+                parent: tnode.target,
+                data: [{
+                    id: tnode.id + '1',
+                    text: 'newnode',
+                }],
+            });
+            $.ajax({
+               url: 'add.php?id='+tnode.id+'&text=newnode',
+               success: function(data){
+                   console.log(data);
+                   var json = eval('('+data+')');
+                   $.messager.show({
+                       title: 'Info',
+                       msg: json.msg
+                   });
+                   $('#treemenu').tree('reload',{
+                      target:  tnode.target,
+                   });
+               }
+                /*data:{
+                    text:'new node'
+                }*/
+            });
+        }
+    }
+    /*移除节点*/
+    function remove() {
+        alert('remove');
+    }
+    var tnode;
+    $(function () {
+        $('#treemenu').tree({
+            url: 'select_treemenu.php',
+            checkbox: true,
+            onlyLeafCheck: true,
+            line: true,
+            dnd: true,
+            onClick: function (node) {
+                if (node.attributes !== undefined && node.attributes.url !== undefined) {
+                    addTab(node.text, node.attributes.url);
+                }
+            },
+            onContextMenu: function (e, node) {
+                e.preventDefault();
+//                alert(node.id);
+                console.log(node);
+                /*查找到该选择的节点*/
+//                $('#treemenu').tree('select', node.target);
+                tnode = node;
+                /*显示右键菜单*/
+                $('#mm').menu('show', {
+                    left: e.pageX,
+                    top: e.pageY
+                });
+            },
+        })
+
+
+        /*添加tab*/
+        function addTab(title, url) {
+            if ($('#contentTabs').tabs('exists', title)) {
+                $('#contentTabs').tabs('select', title);
+            } else {
+                /* var content = '<iframe scrolling="auto" frameborder="0" src="'+url+'" ' +
+                 'style="width:100%; height=100%;"></iframe> ';*/
+                $('#contentTabs').tabs('add', {
+                    title: title,
+                    content: '<iframe src="'
+                    + url
+                    + '" frameBorder="0" border="0"  style="width: 100%; height: 99%; scrolling="no";"/>',
+                    closable: true
+                });
+            }
+        }
+    })
+</script>
+</body>
+</html>

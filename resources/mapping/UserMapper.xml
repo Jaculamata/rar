@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xq.dao.UserDao">
+
+    <insert id="reg" parameterType="com.xq.model.User">
+        insert into user (username,password,jifen) values (#{manager},#{password},#{jifen})
+    </insert>
+
+    <select id="log" parameterType="com.xq.model.User" resultType="com.xq.model.User">
+        select * from table_manager where user= #{user} and password=#{password}
+    </select>
+
+    <select id="selectAllUser" resultType="com.xq.model.User">
+        SELECT * FROM user
+    </select>
+
+    <insert id="dl" parameterType="Map">
+        insert into dl(name, phone) VALUES (#{name}, #{phone})
+    </insert>
+
+    <update id="ginfo" parameterType="com.xq.model.User">
+        UPDATE user SET password = #{password} , phone=#{phone}, weixin=#{weixin} where username=#{manager}
+    </update>
+
+    <select id="getAllUser" resultType="com.xq.model.User">
+        SELECT *
+        FROM user
+    </select>
+
+    <!--3.30查询用户名是否已经存在-->
+    <select id="getUserName" parameterType="String" resultType="com.xq.model.User">
+        SELECT *
+        FROM table_manager
+        WHERE user=#{username}
+    </select>
+    <!--3.30修改密码-->
+    <select id="getPwd" parameterType="com.xq.model.User" resultType="com.xq.model.User">
+        SELECT *
+        FROM table_manager
+        WHERE user=#{user} AND password=#{password}
+    </select>
+
+    <update id="changePwd" parameterType="com.xq.model.User">
+        UPDATE table_manager SET password = #{password} WHERE user=#{user}
+    </update>
+
+    <!--3.30管理员获取所有用户信息-->
+    <select id="getTestUser" parameterType="String" resultType="com.xq.model.User">
+       SELECT * FROM table_manager WHERE role != #{role}
+    </select>
+    <!--3.30管理员新增用户-->
+    <insert id="addUser" parameterType="com.xq.model.User">
+        insert into table_manager(user, password,role) VALUES (#{user}, #{password},#{role})
+    </insert>
+
+    <!--3.30管理员删除用户-->
+    <delete id="deleteUser" parameterType="com.xq.model.User">
+        DELETE FROM table_manager WHERE user=#{user}
+    </delete>
+</mapper>

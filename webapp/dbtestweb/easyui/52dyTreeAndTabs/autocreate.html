@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="../themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../themes/icon.css"/>
+    <script src="../jquery.min.js"></script>
+    <script src="../jquery.easyui.min.js"></script>
+</head>
+<body>
+<a id="btn" class="easyui-linkbutton">click</a>
+<script>
+    function zd (i) {
+        $("body").append('<a href="javascript:void(0)" id="a"+i class="easyui-linkbutton">确定按钮</a>');//生成控件html
+//        $("#a").linkbutton();//渲染
+        $.parser.parse();
+        $.parser = {
+            auto:true,
+            plugins:['linkbutton', 'menu', 'menubutton', 'splitbutton', 'layout','tree', 'window', 'dialog', 'datagrid','combobox', 'combotree', 'numberbox', 'validatebox','calendar', 'datebox', 'panel', 'tabs', 'accordion'],
+            parse:function (context) {
+                if ($.parser.auto) {
+                    for (var i = 0; i < $.parser.plugins.length; i++) {
+                        (function () {
+                            var name = $.parser.plugins[i];
+                            var r = $('.easyui-' + name, context);
+                            if (r.length) {
+                                if (r[name]) {
+                                    r[name]();
+                                } else if (window.easyloader) {
+                                    easyloader.load(name, function () {
+                                        r[name]();
+                                    })
+                                }
+                            }
+                        })();
+                    }
+                }
+            }
+        };
+    };
+
+    var i=1;
+    $(function () {
+        $('#btn').click(function () {
+           zd(i);
+        });
+    });
+</script>
+</body>
+</html>

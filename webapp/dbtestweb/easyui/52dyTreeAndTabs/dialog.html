@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="../themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../themes/icon.css"/>
+    <script src="../jquery.min.js"></script>
+    <script src="../jquery.easyui.min.js"></script>
+</head>
+<body>
+<!--通过js直接创建对话框-->
+<!--<div id="dlg">
+dialog content.
+</div>-->
+
+<!--通过相关标签创建对话框-->
+<div id="win" class="easyui-dialog" title="添加指令" style="width: 600px;height: 400px;padding: 10px"
+     toolbar="#dlg-toolbar" buttons="#dlg-buttons">
+    <!--<div>-->
+    <form id="fm" method="post" novalidate>
+        <!--<h4 style="color: #00ee00">指令：</h4>-->
+        <div id="scrolldIV" style="border: 1px solid #999;">
+            <table style="margin: 5px;"><!--border: 1px solid #000-->
+                <tr><td>指令1</td><td>嵌套于</td></tr>
+                <tr><td><select id="combobox1" class="easyui-combobox" name="dept" style="width: 200px;">
+                        <option value="SQL">SQL</option>
+                        <option value="UID">UID</option>
+                        <option value="PWD">PWD</option>
+                    </select></td>
+                    <td><input id="input1" placeholder="指令(编号)" type="text"/></td></tr>
+                <tr><td colspan="2"><textarea id="zl1" name="zl1" class="easyui-validatebox" required="true"
+                      style="width: 500px; height: 60px;font-size: 16px"></textarea></td></tr>
+            </table>
+            <!--<div style="margin: 5px">
+                <h5>指令1:<span style="text-align: right">&lt;!&ndash;<input id="cbox1" type="checkbox">&ndash;&gt;嵌套：<input id="input1" placeholder="指令(编号)" type="text" /></span></h5>
+                <select id="combobox1" class="easyui-combobox" name="dept"
+                        style="width: 200px;">
+                    <option value="aa">a1</option>
+                    <option>a2</option>
+                    <option>a3</option>
+                </select>
+                <p>
+                <div></div>
+                <textarea id="zl1" name="zl1" class="easyui-validatebox" required="true"
+                                      style="width: 300px; height: 60px;font-size: 16px"></textarea>
+                </p>
+            </div>-->
+            <!--<div class="fitem"></div>-->
+        </div>
+    </form>
+
+    <!--</div>-->
+
+</div>
+
+<div id="dlg-toolbar">
+    <table cellpadding="0" cellspacing="0" style="width: 100%;margin: 5px;">
+        <tr>
+            <!--<td>
+                <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true">编辑</a>
+                <a href="#" class="easyui-linkbutton" iconCls="icon-help" plain="true">帮助</a>
+            </td>-->
+            <td style="text-align: left">
+                <!--<input/><a href="#" class="easyui-linkbutton" iconCls="icon-search" plain="true">搜索</a>-->
+                <!--<div class="fitem"></div>-->
+                   <!-- <span style="color:#000;font-size: 16px">期望执行结果:</span>-->
+                <textarea id="qw" name="qw" class="easyui-validatebox" placeholder="期望执行结果:"
+                                                                     required="true"
+                                                                     style="width: 300px; height: 18px;font-size: 16px"></textarea>
+
+            </td>
+        </tr>
+    </table>
+</div>
+<div id="dlg-buttons">
+    <table cellpadding="0" cellspacing="0" style="width: 100%">
+        <tr>
+            <td style="text-align: left">
+                <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true"
+                   onclick="addNewLine()">新增</a>
+                <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true"
+                   onclick="remove()">移除</a>
+            </td>
+            <td>
+                <a href="#" class="easyui-linkbutton" iconCls="icon-save" plain="true"
+                   onclick="saveForm()">保存</a>
+                <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" plain="true"
+                   onclick="javascript:$('#win').dialog('close');">取消</a>
+            </td>
+        </tr>
+    </table>
+</div>
+<script src="../js/dialog.js"></script>
+<script>
+    var i = 2;
+    function saveForm() {
+//        console.log($('#qw').val());
+        var xml ="<SQL_CASE><type>";
+        xml+=$('#qw').val()+"</type>";
+        for (var j = 1; j < i; j++) {
+//            console.log($('#cbox' + j).prop("checked"));
+//            if($('#cbox' + j).prop("checked"))
+            {
+                var com= $('#combobox' + j).combobox('getText');
+                console.log($('#input' + j).val());
+//                console.log($('#combobox' + j).val(), $('#input' + j).val(), $('#zl' + j).val());
+                xml+="<"+com+">"+$('#zl' + j).val()+"</"+com+">";
+            }
+            /*else{
+                xml+="<"+$('#combobox' + j).val()+">"+$('#zl' + j).val()+"</"+$('#combobox' + j).val()+">"
+            }*/
+        }
+        xml+="</SQL_CASE>";
+        console.log(xml);
+    }
+
+    function remove() {
+        /*var now = new Date();
+         var div = document.getElementById('scrolldIV');
+         div.innerHTML = div.innerHTML + 'time_' + now.getTime() + '<br />';
+         div.scrollTop = div.scrollHeight;*/
+        $('#hr'+(i-1)).remove();
+        $('#div'+(i-1)).remove();
+        i--;
+    }
+    function addNewLine() {
+        /*var now = new Date();
+         var div = document.getElementById('scrolldIV');
+         //        div.innerHTML = div.innerHTML + getItem(this.i) + '<br />';
+         //        div.appendChild(getItem(this.i) + '<br />');
+         div.scrollTop = div.scrollHeight;*/
+        var div = $('#scrolldIV');
+        /*div.append("<hr id=\"hr" + i + "\">" +
+                "<div id=\"div" + i + "\" style=\"margin: 5px\">" +
+                "<h5>指令" + i + ":</h5>" +
+                "<select id=\"combobox" + i + "\" class=\"easyui-combobox\" name=\"dept\"" +
+                " style=\"width: 200px;\">" +
+                " <option value=\"aa\">a1</option>" +
+                " <option>a2</option>" +
+                " <option>a3</option>" +
+                " </select>" +
+                "  <p><input id=\"cbox" + i + "\" type=\"checkbox\">嵌套,指令(编号)：<input id=\"input" + i + "\" type=\"text\" />" +
+                "<textarea id=\"zl" + i + "\" name=\"zl1\" class=\"easyui-validatebox\" required=\"true\"" +
+                " style=\"width: 300px; height: 60px;font-size: 16px\"></textarea></p>" +
+                "</div>");*/
+        div.append("<hr id=\"hr" + i + "\">" +
+                "<div id=\"div" + i + "\">"+
+                "<table style=\"margin: 5px;\"><!--border: 1px solid #000-->"+
+        "<tr><td>指令"+i+"</td><td>嵌套于</td></tr>"+
+        "<tr><td><select id=\"combobox" + i + "\" class=\"easyui-combobox\" name=\"dept\" style=\"width: 200px;\">"+
+                "<option value=\"SQL\">SQL</option>"+
+                "<option value=\"UID\">UID</option>"+
+                "<option value=\"PSW\">PSW</option>"+
+                "</select></td>"+
+                "<td><input id=\"input" + i + "\"  placeholder=\"指令(编号)\" type=\"text" + i + "\" /></td></tr>"+
+                "<tr><td colspan=\"2\"><textarea id=\"zl" + i + "\" name=\"zl" + i + "\"  class=\"easyui-validatebox\" required=\"true\""+
+        "style=\"width: 500px; height: 60px;font-size: 16px\"></textarea></td></tr>"+
+                "</table></div>");
+//        $.parser.parse('combobox'+i);
+        /*$('#combobox'+i).combobox();
+        $('#zl'+i).validatebox();*/
+        $.parser.parse();
+        this.i++;
+    }
+    function getItem(i) {
+        var divcontent = '<div style=\"margin: 5px\">' +
+                '<h5>指令:' + i + '</h5><select id=\"combobox' + i + '\" class=\"easyui-combobox\" name=\"dept\"style=\"width: 200px;\">' +
+                '<option value=\"aa\">a1</option>' +
+                '<option>a2</option>' +
+                '<option>a3</option>' +
+                '</select>' +
+                '<p><textarea id="zl' + i + '" name="zl" class="easyui-validatebox" required="true"' +
+                'style="width: 300px; height: 60px;font-size: 16px"></textarea></p>' +
+                '</div>'/*
+         <div class=\"fitem\">+
+         '</div>'*/;
+        return divcontent;
+    }
+</script>
+</body>
+</html>
